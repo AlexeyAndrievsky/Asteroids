@@ -23,7 +23,7 @@ namespace Asteroids
         public static void Load()
         {
             _objs = new List<BaseObject>();
-            _objs.Add(new ImageObject(new Point(0, 0), new Point(0, 0), new Size(Width, Height), Image.FromFile(@"..\..\res\background.jpg")));
+            _objs.Add(new Background(new Point(0, 0), new Point(1, 0), new Size(Width, Height), Image.FromFile(@"..\..\res\background.jpeg")));
             for (int i = 0; i < 15; i++)
                 _objs.Add(new BaseObject(new Point(600, i * 20), new Point(-i, -i), new Size(10, 10)));
             int cnt = _objs.Count;
@@ -37,10 +37,11 @@ namespace Asteroids
             g = form.CreateGraphics();
             Width = form.Width;
             Height = form.Height;
+            
             Buffer = _context.Allocate(g, new Rectangle(0, 0, Width, Height));
 
             Load();
-            Timer timer = new Timer { Interval = 100 };
+            Timer timer = new Timer { Interval = 10 };
             timer.Start();
             timer.Tick += Timer_Tick;
         }
@@ -48,6 +49,7 @@ namespace Asteroids
         public static void Draw()
         {
             Buffer.Graphics.Clear(Color.Black);
+
             foreach (BaseObject obj in _objs)
                 obj.Draw();
             Buffer.Render();
@@ -57,6 +59,7 @@ namespace Asteroids
         {
             foreach (BaseObject obj in _objs)
                 obj.Update();
+           
         }
         private static void Timer_Tick(object sender, EventArgs e)
         {

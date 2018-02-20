@@ -58,7 +58,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Content Include="res\background.jpg" />
+    <Content Include="res\background.jpeg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
