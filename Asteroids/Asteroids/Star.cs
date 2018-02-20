@@ -3,14 +3,13 @@ using System.Drawing;
 
 namespace Asteroids
 {
-    class Star: BaseObject
+    class Star: ImageObject
     {
-        public Star(Point pos, Point dir, Size size) : base(pos, dir, size)
+        public Star(Point pos, Point dir, Size size, Image image) : base(pos, dir, size, image)
         {
         }        public override void Draw()
         {
-            Game.Buffer.Graphics.DrawLine(Pens.White, Pos.X, Pos.Y, Pos.X + Size.Width, Pos.Y + Size.Height);
-            Game.Buffer.Graphics.DrawLine(Pens.White, Pos.X + Size.Width, Pos.Y, Pos.X, Pos.Y + Size.Height);
+            Game.Buffer.Graphics.DrawImage(ObjectImage, new Rectangle(Pos.X, Pos.Y, Size.Width, Size.Width));
         }        public override void Update()
         {
             Pos.X = Pos.X - Dir.X;

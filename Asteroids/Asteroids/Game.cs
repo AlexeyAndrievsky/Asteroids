@@ -2,7 +2,6 @@
 using System.Windows.Forms;
 using System.Drawing;
 using System.Collections.Generic;
-using System.IO;
 
 namespace Asteroids
 {
@@ -10,10 +9,9 @@ namespace Asteroids
     {
         private static BufferedGraphicsContext _context;
         public static BufferedGraphics Buffer;
-        // Свойства
-        // Ширина и высота игрового поля
         public static int Width { get; set; }
         public static int Height { get; set; }
+
         static Game()
         {
         }
@@ -24,12 +22,12 @@ namespace Asteroids
         {
             _objs = new List<BaseObject>();
             _objs.Add(new Background(new Point(0, 0), new Point(1, 0), new Size(Width, Height), Image.FromFile(@"..\..\res\background.jpeg")));
-            for (int i = 0; i < 15; i++)
-                _objs.Add(new BaseObject(new Point(600, i * 20), new Point(-i, -i), new Size(10, 10)));
+            for (int i = 0; i < 1; i++)
+                _objs.Add(new Meteor(new Point(100, 100), new Point(2, 0), new Size(121, 107), Image.FromFile(@"..\..\res\ast1.png"),3));
             int cnt = _objs.Count;
             for (int i = cnt; i < cnt + 15; i++)
-                _objs.Add(new Star(new Point(600, i * 20), new Point(i, 0), new Size(5, 5)));
-        }
+                _objs.Add(new Star(new Point(600, i * 20), new Point(i, 0), new Size(10, 10), Image.FromFile(@"..\..\res\bluestar.png")));
+        }
         public static void Init(Form form)
         {
             Graphics g;
@@ -41,7 +39,7 @@ namespace Asteroids
             Buffer = _context.Allocate(g, new Rectangle(0, 0, Width, Height));
 
             Load();
-            Timer timer = new Timer { Interval = 10 };
+            Timer timer = new Timer { Interval = 100 };
             timer.Start();
             timer.Tick += Timer_Tick;
         }
