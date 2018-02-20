@@ -21,12 +21,12 @@ namespace Asteroids
         public static void Load()
         {
             _objs = new List<BaseObject>();
-            _objs.Add(new Background(new Point(0, 0), new Point(1, 0), new Size(Width, Height), Image.FromFile(@"..\..\res\background.jpeg")));
+            _objs.Add(new Background(new Point(0, 0), new Point(1, 0), new Size(Width, Height), Image.FromFile(@"..\..\res\img\background.jpeg")));
             for (int i = 0; i < 1; i++)
-                _objs.Add(new Meteor(new Point(100, 100), new Point(2, 0), new Size(121, 107), Image.FromFile(@"..\..\res\ast1.png"),3));
+                _objs.Add(new Meteor(new Point(100, 100), new Point(2, 0), new Size(121, 107), Image.FromFile(@"..\..\res\img\ast1.png"),3));
             int cnt = _objs.Count;
             for (int i = cnt; i < cnt + 15; i++)
-                _objs.Add(new Star(new Point(600, i * 20), new Point(i, 0), new Size(10, 10), Image.FromFile(@"..\..\res\bluestar.png")));
+                _objs.Add(new Star(new Point(600, i * 20), new Point(i, 0), new Size(10, 10), Image.FromFile(@"..\..\res\img\bluestar.png")));
         }
         public static void Init(Form form)
         {
