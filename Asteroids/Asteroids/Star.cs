@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace Asteroids
 {
-    class Star: ImageObject
+    class Star : ImageObject
     {
         public Star(Point pos, Point dir, Size size, Image image) : base(pos, dir, size, image)
         {

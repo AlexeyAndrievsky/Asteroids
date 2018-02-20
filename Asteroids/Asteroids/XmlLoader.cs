@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
 
 namespace Asteroids
@@ -32,17 +29,24 @@ namespace Asteroids
 
         public void Load()
         {
-            XmlSerializer xmlFormat = new XmlSerializer(typeof(List<GameObj>));
-            Stream fStream = new FileStream(fileName, FileMode.Open, FileAccess.Read);
-            resList = (List<GameObj>)xmlFormat.Deserialize(fStream);
-            fStream.Close();
-
-            foreach (GameObj obj in resList)
+            if (File.Exists(fileName))
             {
-                if (File.Exists(@"..\..\res\img\" + obj.imgName))
-                    obj.img = Image.FromFile(@"..\..\res\img\" + obj.imgName);
-                else
-                    resList.Remove(obj);
+                XmlSerializer xmlFormat = new XmlSerializer(typeof(List<GameObj>));
+                Stream fStream = new FileStream(fileName, FileMode.Open, FileAccess.Read);
+                resList = (List<GameObj>)xmlFormat.Deserialize(fStream);
+                fStream.Close();
+
+                foreach (GameObj obj in resList)
+                {
+                    if (File.Exists(@"..\..\res\img\" + obj.imgName))
+                        obj.img = Image.FromFile(@"..\..\res\img\" + obj.imgName);
+                    else
+                        resList.Remove(obj);
+                }
+            }
+            else
+            {
+                throw new FileNotFoundException();
             }
         }
     }
