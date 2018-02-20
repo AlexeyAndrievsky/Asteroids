@@ -6,12 +6,12 @@ namespace Asteroids
     class ImageObject : BaseObject
     {
         protected Image ObjectImage;
+        private Image image;
 
         public ImageObject(Point pos, Point dir, Size size, Image image) : base(pos, dir, size)
         {
             ObjectImage = image;
-        }
-        public override void Draw()
+        }        public override void Draw()
         {
             Game.Buffer.Graphics.DrawImage(ObjectImage, new Rectangle(Pos.X, Pos.Y, Size.Width, Size.Height));
         }        public override void Update()

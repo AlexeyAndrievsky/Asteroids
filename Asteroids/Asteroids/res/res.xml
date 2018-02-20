@@ -1,19 +1,23 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<ResourcesLoader xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
-xmlns:xsd = "http://www.w3.org/2001/XMLSchema">
+﻿<?xml version="1.0"?>
+<ArrayOfGameObj xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <GameObj>
     <imgName>bluestar.png</imgName>
+    <resType>star</resType>
   </GameObj>
   <GameObj>
     <imgName>whitestar.png</imgName>
+    <resType>star</resType>
   </GameObj>
   <GameObj>
     <imgName>ast1.png</imgName>
+    <resType>asteroid</resType>
   </GameObj>
   <GameObj>
     <imgName>ast2.png</imgName>
+    <resType>asteroid</resType>
   </GameObj>
   <GameObj>
-    <imgName>ast.png</imgName>
+    <imgName>ast3.png</imgName>
+    <resType>asteroid</resType>
   </GameObj>
-</ResourcesLoader>
+</ArrayOfGameObj>

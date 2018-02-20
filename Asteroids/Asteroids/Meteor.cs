@@ -13,7 +13,9 @@ namespace Asteroids
         {
             DAngle = dAngle;
             Angle = 0;
-        }        public override void Draw()
+        }
+
+        public override void Draw()
         {
             int x = Pos.X + Size.Width / 2;
             int y = Pos.Y + Size.Height / 2;

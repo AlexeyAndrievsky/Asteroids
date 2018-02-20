@@ -1,5 +1,6 @@
 ﻿using System;
-using System.Drawing;
+using System.Drawing;
+
 
 namespace Asteroids
 {
@@ -8,6 +9,7 @@ namespace Asteroids
         protected Point Pos;
         protected Point Dir;
         protected Size Size;
+
         public BaseObject(Point pos, Point dir, Size size)
         {
             Pos = pos;

@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using System.Drawing;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Asteroids
 {
@@ -11,6 +12,7 @@ namespace Asteroids
         public static BufferedGraphics Buffer;
         public static int Width { get; set; }
         public static int Height { get; set; }
+        static Random rand;
 
         static Game()
         {
@@ -20,13 +22,22 @@ namespace Asteroids
 
         public static void Load()
         {
+
+            XmlLoader loader = new XmlLoader(@"..\..\res\res.xml");
+            loader.Load();
+            object a = loader.ResList;
+
             _objs = new List<BaseObject>();
             _objs.Add(new Background(new Point(0, 0), new Point(1, 0), new Size(Width, Height), Image.FromFile(@"..\..\res\img\background.jpeg")));
-            for (int i = 0; i < 1; i++)
-                _objs.Add(new Meteor(new Point(100, 100), new Point(2, 0), new Size(121, 107), Image.FromFile(@"..\..\res\img\ast1.png"),3));
-            int cnt = _objs.Count;
-            for (int i = cnt; i < cnt + 15; i++)
-                _objs.Add(new Star(new Point(600, i * 20), new Point(i, 0), new Size(10, 10), Image.FromFile(@"..\..\res\img\bluestar.png")));
+
+            rand = new Random();
+
+            for (int i = 0; i < 15; i++)
+                _objs.Add(new Star(new Point(rand.Next(Width + 10, Width + 650), rand.Next(0, Height)), new Point(rand.Next(15, 30), 0), new Size(rand.Next(3, 10), 0), loader.ResList.Where(t => t.resType == "star").OrderBy(arg => Guid.NewGuid()).Take(1).FirstOrDefault().img));
+
+            for (int i = 0; i < 15; i++)
+                _objs.Add(new Meteor(new Point(rand.Next(Width + 100, Width + 650), rand.Next(0, Height)), new Point(rand.Next(2,9), 0), new Size(rand.Next(50, 110), rand.Next(50, 110)), loader.ResList.Where(t=>t.resType == "asteroid").OrderBy(arg => Guid.NewGuid()).Take(1).FirstOrDefault().img, rand.Next(-10,10)));
+
         }
         public static void Init(Form form)
         {

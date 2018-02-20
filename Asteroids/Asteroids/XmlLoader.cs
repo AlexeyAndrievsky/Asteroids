@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -10,31 +11,39 @@ namespace Asteroids
 {
     class XmlLoader
     {
-        string fileName;
-        List<GameObj> ResList;
+        private string fileName;
+        private List<GameObj> resList;
 
         public string FileName
         {
             set { fileName = value; }
         }
 
-        public int Count
+        public List<GameObj> ResList
         {
-            get { return ResList.Count; }
+            get { return resList; }
         }
 
         public XmlLoader(string fileName)
         {
             this.fileName = fileName;
-            ResList = new List<GameObj>();
+            resList = new List<GameObj>();
         }
 
         public void Load()
         {
             XmlSerializer xmlFormat = new XmlSerializer(typeof(List<GameObj>));
             Stream fStream = new FileStream(fileName, FileMode.Open, FileAccess.Read);
-            ResList = (List<GameObj>)xmlFormat.Deserialize(fStream);
+            resList = (List<GameObj>)xmlFormat.Deserialize(fStream);
             fStream.Close();
+
+            foreach (GameObj obj in resList)
+            {
+                if (File.Exists(@"..\..\res\img\" + obj.imgName))
+                    obj.img = Image.FromFile(@"..\..\res\img\" + obj.imgName);
+                else
+                    resList.Remove(obj);
+            }
         }
     }
 }
