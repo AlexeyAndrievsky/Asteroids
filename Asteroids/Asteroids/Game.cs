@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Drawing;
+using System.Collections.Generic;
+using System.IO;
 
 namespace Asteroids
 {
@@ -16,28 +18,27 @@ namespace Asteroids
         {
         }
 
-        public static BaseObject[] _objs;
+        public static List<BaseObject> _objs;
+
         public static void Load()
         {
-            _objs = new BaseObject[30];
-            for (int i = 0; i < _objs.Length / 2; i++)
-                _objs[i] = new BaseObject(new Point(600, i * 20), new Point(-i, -i), new Size(10, 10));
-            for (int i = _objs.Length / 2; i < _objs.Length; i++)
-                _objs[i] = new Star(new Point(600, i * 20), new Point(i, 0), new Size(5, 5));
+            _objs = new List<BaseObject>();
+            _objs.Add(new ImageObject(new Point(0, 0), new Point(0, 0), new Size(Width, Height), Image.FromFile(@"..\..\res\background.jpg")));
+            for (int i = 0; i < 15; i++)
+                _objs.Add(new BaseObject(new Point(600, i * 20), new Point(-i, -i), new Size(10, 10)));
+            int cnt = _objs.Count;
+            for (int i = cnt; i < cnt + 15; i++)
+                _objs.Add(new Star(new Point(600, i * 20), new Point(i, 0), new Size(5, 5)));
         }
         public static void Init(Form form)
         {
-            // Графическое устройство для вывода графики
             Graphics g;
-            // предоставляет доступ к главному буферу графического контекста для текущего приложения
             _context = BufferedGraphicsManager.Current;
-            g = form.CreateGraphics();// Создаём объект - поверхность рисования и связываем его с формой
-                                      // Запоминаем размеры формы
+            g = form.CreateGraphics();
             Width = form.Width;
             Height = form.Height;
-            // Связываем буфер в памяти с графическим объектом.
-            // для того, чтобы рисовать в буфере
             Buffer = _context.Allocate(g, new Rectangle(0, 0, Width, Height));
+
             Load();
             Timer timer = new Timer { Interval = 100 };
             timer.Start();
@@ -46,11 +47,6 @@ namespace Asteroids
 
         public static void Draw()
         {
-            // Проверяем вывод графики
-            //Buffer.Graphics.Clear(Color.Black);
-            //Buffer.Graphics.DrawRectangle(Pens.White, new Rectangle(100, 100, 200, 200));
-            //Buffer.Graphics.FillEllipse(Brushes.Wheat, new Rectangle(100, 100, 200, 200));
-            //Buffer.Render();
             Buffer.Graphics.Clear(Color.Black);
             foreach (BaseObject obj in _objs)
                 obj.Draw();
