@@ -31,7 +31,7 @@ namespace Asteroids
             double y3 = y + ((Size.Width / 2) * Math.Sin(_angle) + (Size.Height / 2) * Math.Cos(_angle));
 
             Point[] destPoints = { new Point((int)x2, (int)y2), new Point((int)x1, (int)y1), new Point((int)x3, (int)y3) };
-            Game.Buffer.Graphics.DrawImage(ObjectImage, destPoints);
+            Game.Buffer.Graphics.DrawImage(Image, destPoints);
 
             /* разобраться почему этот способ дает глюк
             Game.Buffer.Graphics.TranslateTransform(Pos.X+Size.Width/2, Pos.Y+Size.Height/2);

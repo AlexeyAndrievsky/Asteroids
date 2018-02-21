@@ -5,15 +5,14 @@ namespace Asteroids
 {
     class ImageObject : BaseObject
     {
-        protected Image ObjectImage;
-        private Image image;
+        protected Image Image;
 
         public ImageObject(Point pos, Point dir, Size size, Image image) : base(pos, dir, size)
         {
-            ObjectImage = image;
+            Image = image;
         }        public override void Draw()
         {
-            Game.Buffer.Graphics.DrawImage(ObjectImage, new Rectangle(Pos.X, Pos.Y, Size.Width, Size.Height));
+            Game.Buffer.Graphics.DrawImage(Image, new Rectangle(Pos.X, Pos.Y, Size.Width, Size.Height));
         }        public override void Update()
         {
             Pos.X = Pos.X - Dir.X;

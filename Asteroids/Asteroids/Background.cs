@@ -22,7 +22,7 @@ namespace Asteroids
         }        public override void Update()
         {
             foreach (ImageObject img in BackgroundList)
-                img.Update(-ObjectImage.Width);
+                img.Update(-Image.Width);
         }
     }
 }

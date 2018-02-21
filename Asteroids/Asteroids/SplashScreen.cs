@@ -7,7 +7,7 @@ using System.IO;
 
 namespace Asteroids
 {
-    static class Game
+    static class SplashScreen
     {
         private static BufferedGraphicsContext _context;
         public static BufferedGraphics Buffer;
@@ -16,7 +16,7 @@ namespace Asteroids
         static Random rand;
         static ExceptionHelper exp;
 
-        static Game()
+        static SplashScreen()
         {
             exp = new ExceptionHelper();
         }
@@ -27,32 +27,14 @@ namespace Asteroids
         {
             try
             {
-                string resfile = @"..\..\res\res.xml";
-                if (File.Exists(resfile))
-                {
-                    XmlLoader loader = new XmlLoader(resfile);
-                    loader.Load();
-
-                    _objs = new List<BaseObject>();
-                    _objs.Add(new Background(new Point(0, 0), new Point(1, 0), new Size(Width, Height), Image.FromFile(@"..\..\res\img\background.jpeg")));
-
-                    rand = new Random();
-
-                    for (int i = 0; i < 15; i++)
-                        _objs.Add(new Star(new Point(rand.Next(Width + 10, Width + 650), rand.Next(0, Height)), new Point(rand.Next(15, 30), 0), new Size(rand.Next(3, 10), 0), loader.ResList.Where(t => t.resType == "star").OrderBy(arg => Guid.NewGuid()).Take(1).FirstOrDefault().img));
-
-                    for (int i = 0; i < 15; i++)
-                        _objs.Add(new Meteor(new Point(rand.Next(Width + 100, Width + 650), rand.Next(0, Height)), new Point(rand.Next(2, 9), 0), new Size(rand.Next(50, 110), rand.Next(50, 110)), loader.ResList.Where(t => t.resType == "asteroid").OrderBy(arg => Guid.NewGuid()).Take(1).FirstOrDefault().img, rand.Next(-10, 10)));
-                }
-                else
-                {
-                    throw new FileNotFoundException();
-                }
-
+                rand = new Random();
+                _objs = new List<BaseObject>();
+                for (int i = 0; i < 100; i++)
+                    _objs.Add(ThroughtSpaceGenerator(Image.FromFile(@"..\..\res\img\whitestar.png"), 5));
             }
             catch (Exception ex)
             {
-                exp.PutMessage("Game.Load()", ex);
+                exp.PutMessage("SplashScreen.Load()", ex);
             }
         }
         public static void Init(Form form)
@@ -74,7 +56,7 @@ namespace Asteroids
             }
             catch (Exception ex)
             {
-                exp.PutMessage("Game.Init()", ex);
+                exp.PutMessage("SplashScreen.Init()", ex);
             }
         }
 
@@ -91,7 +73,7 @@ namespace Asteroids
             }
             catch (Exception ex)
             {
-                exp.PutMessage("Game.Draw()", ex);
+                exp.PutMessage("SplashScreen.Draw()", ex);
             }
         }
 
@@ -104,7 +86,7 @@ namespace Asteroids
             }
             catch (Exception ex)
             {
-                exp.PutMessage("Game.Update()", ex);
+                exp.PutMessage("SplashScreen.Update()", ex);
             }
 
         }
@@ -117,6 +99,33 @@ namespace Asteroids
             }
             catch (Exception ex)
             {
-                exp.PutMessage("Game.Timer_Tick()", ex);
+               exp.PutMessage("SplashScreen.Timer_Tick()", ex);
             }
-      }    }}
+        }        public static ThroughtSpace ThroughtSpaceGenerator(Image image, int speed)
+        {
+            try
+            {
+                return new ThroughtSpace(new Point(rand.Next(0, Width), rand.Next(0, Height)), new Point(speed, speed), new Size(1, 1), image, rand);
+            }
+            catch (Exception ex)
+            {
+                exp.PutMessage("SplashScreen.ThroughtSpaceGenerator()", ex);
+                return null;
+            }
+        }        public static void DrawString(Graphics g, string s, int x, int y, int angle, Brush brush)
+        {
+            try
+            {
+                g.TranslateTransform(x, y);
+                g.RotateTransform(angle);
+                g.DrawString(s, new Font(new FontFamily("Arial"), 16), brush, 0, 0);
+                g.RotateTransform(-angle);
+                g.TranslateTransform(-x, -y);
+            }
+            catch (Exception ex)
+            {
+                exp.PutMessage("SplashScreen.DrawString()", ex);
+            }
+        }
+    }
+}
