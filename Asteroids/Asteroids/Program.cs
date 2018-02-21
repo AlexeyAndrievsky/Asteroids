@@ -7,21 +7,22 @@ namespace Asteroids
         static ExceptionHelper exp;
         static void Main(string[] args)
         {
-            //try
-            //{
+            try
+            {
                 exp = new ExceptionHelper();
                 Form form = new Form();
-                form.Width = 800;
-                form.Height = 600;
+                form.StartPosition = FormStartPosition.CenterScreen;
+                form.FormBorderStyle = FormBorderStyle.None;
+                form.Width = Screen.PrimaryScreen.Bounds.Width;
+                form.Height = Screen.PrimaryScreen.Bounds.Height;
                 SplashScreen.Init(form);
                 form.Show();
                 Application.Run(form);
-                Console.ReadLine();
-            //}
-            //catch (Exception ex)
-            //{
-            //    exp.PutMessage("Main", ex);
-            //}
+            }
+            catch (Exception ex)
+            {
+                exp.PutMessage("Main", ex);
+            }
         }
     }
 }
