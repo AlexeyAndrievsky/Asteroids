@@ -41,12 +41,12 @@ namespace Asteroids
 
         #region public Methods
         /// <summary>
-        /// Метод отрисовки астероида
+        /// Метод отрисовки астероида.
         /// </summary>
         public override void Draw()
         {
             //Рассчет центра вращения
-            int x = Pos.X + Size.Width / 2; 
+            int x = Pos.X + Size.Width / 2;
             int y = Pos.Y + Size.Height / 2;
             double _angle = Angle * Math.PI / 180; //перевод градусов в радианы
 
@@ -81,7 +81,7 @@ namespace Asteroids
             //Движение объекта вдоль координат X и Y
             Pos.X = Pos.X + Dir.X;
             Pos.Y = Pos.Y + Dir.Y;
-            
+
             //Если объект доходит до края экрана, то он начинает движение с противоположной стороны экрана 
             if (Pos.X < -Size.Width)
                 Pos.X = ScreenSize.Width + Size.Width;
@@ -89,10 +89,10 @@ namespace Asteroids
                 Pos.X = -Size.Width;
             if (Pos.Y < -Size.Height)
                 Pos.Y = ScreenSize.Height + Size.Height;
-            if (Pos.Y > ScreenSize.Height + Size.Height )
+            if (Pos.Y > ScreenSize.Height + Size.Height)
                 Pos.Y = -Size.Height;
-            
-            //Поаорот объекта на заданный угол
+
+            //Поворот объекта на заданный угол
             Angle += DAngle;
             if (Angle >= 360) //Если угол больше или равен 360 градусов, то он выставляется в 0
                 Angle = 0;

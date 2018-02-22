@@ -84,26 +84,27 @@ namespace Asteroids
                     loader.Load(); //Загрузка ресурсов игры
 
                     _objs = new List<BaseObject>(); //Инициализациея списка игровых объектов
+                    rand = new Random(); //Инициализациея генератора псевдослучайных чисел
+
                     _objs.Add(new Background(new Point(0, 0), new Point(-1, 0), new Size(Width, Height),
                         Image.FromFile(@"..\..\res\img\background.jpeg"), Buffer.Graphics, new Size(Width, Height))); //Создание заднего фона
 
-                    rand = new Random(); //Инициализациея гшенератора псевдослучайных чисел
-
-                    for (int i = 0; i < 40; i++) //Добавление в список игровых объектов звезд. Положение, размер и скорость движения звезды выбираются случайным образом в некотором диапазоне
+                    for (int i = 0; i < 100; i++) //Добавление в список игровых объектов звезд. Положение, размер и скорость движения звезды выбираются случайным образом в некотором диапазоне
                         _objs.Add(new Star(
-                            new Point(rand.Next(Width + 10, Width + 650), rand.Next(0, Height)), //Координаты 
-                            new Point(rand.Next(-30, -15), 0), //Направление и скорость движения 
-                            new Size(rand.Next(3, 10), 0), //Размеры
+                            new Point(rand.Next(10, Width + 650), rand.Next(0, Height)), //Координаты звезды
+                            new Point(rand.Next(-30, -15), 0), //Направление и скорость движения звезды
+                            new Size(rand.Next(3, 10), 0), //Размеры звезды
                             loader.ResList.Where(t => t.resType == "star").OrderBy(arg => Guid.NewGuid()).Take(1).FirstOrDefault().img, //Изображение каждой звезды выбирается случайным образом из загруженных ресурсов
                             Buffer.Graphics,
-                            new Size(Width, Height)
+                            new Size(Width, Height),
+                            rand.Next(-2, 2) //Пульсация звезды
                             ));
 
-                    for (int i = 0; i < 16; i++) //Добавление в список игровых объектов астероидов. Положение, размер и скорость движения астероида выбираются случайным образом в некотором диапазоне
+                    for (int i = 0; i < 22; i++) //Добавление в список игровых объектов астероидов. Положение, размер и скорость движения астероида выбираются случайным образом в некотором диапазоне
                         _objs.Add(new Meteor(
-                            new Point(rand.Next(Width + 100, Width + 650), rand.Next(0, Height)), //Координаты 
-                            new Point(rand.Next(-9, -2), 0), //Направление и скорость движения 
-                            new Size(rand.Next(50, 110), rand.Next(50, 110)), //Размеры
+                            new Point(rand.Next(Width + 100, Width + 650), rand.Next(0, Height)), //Координаты астероида
+                            new Point(rand.Next(-9, -2), 0), //Направление и скорость движения астероида
+                            new Size(rand.Next(50, 110), rand.Next(50, 110)), //Размеры астероида
                             loader.ResList.Where(t => t.resType == "asteroid").OrderBy(arg => Guid.NewGuid()).Take(1).FirstOrDefault().img, //Изображение каждого астероида выбирается случайным образом из загруженных ресурсов
                             Buffer.Graphics,
                             new Size(Width, Height),
@@ -124,7 +125,7 @@ namespace Asteroids
         /// <summary>
         /// Метод инициализации игры.
         /// </summary>
-        /// <param name="form"></param>
+        /// <param name="form">Форма, внутри которой реализована графика</param>
         public static void Init(Form form)
         {
             try
@@ -180,7 +181,7 @@ namespace Asteroids
                 foreach (BaseObject obj in _objs)
                     obj.Draw(); //Перебор всех игровых объектов в цикле и вызов их метода отрисовки
 
-                Buffer.Render(); 
+                Buffer.Render();
             }
             catch (Exception ex)
             {
@@ -189,14 +190,14 @@ namespace Asteroids
         }
 
         /// <summary>
-        /// Метод обновления 
+        /// Метод обновления параметров игровых объектов.
         /// </summary>
         public static void Update()
         {
             try
             {
                 foreach (BaseObject obj in _objs)
-                    obj.Update();
+                    obj.Update(); //Перебор всех игровых объектов в цикле и вызов их метода обновления
             }
             catch (Exception ex)
             {
@@ -206,14 +207,21 @@ namespace Asteroids
         }
         #endregion
         #region Private methods
+        /// <summary>
+        /// Оброботчик события срабатывания игрового таймера.
+        /// </summary>
         private static void Timer_Tick(object sender, EventArgs e)
         {
             try
             {
-                if (Flag)
+                if (Flag) //Проверка флага игрового таймера
                 {
-                    Draw();
-                    Update();
+                    Draw(); //Вызов метода отрисовки игрового экрана
+                    Update(); //Вызов метода обновления параметров игровых объектов
+                }
+                else
+                {
+                    (sender as Timer).Stop(); //Остановка таймера
                 }
             }
             catch (Exception ex)
@@ -222,15 +230,23 @@ namespace Asteroids
             }
         }
 
+        /// <summary>
+        /// Обработчик события нажатия кнопки возврата в меню.
+        /// </summary>
         private static void toMenu_Click(object sender, EventArgs e)
         {
-            _form.Close();
+            _form.Close(); //Закрытие текущей формы
         }
 
+        /// <summary>
+        /// Обработчик события, возникающего при закрытии формы.
+        /// </summary>
         private static void game_Closing(object sender, FormClosingEventArgs e)
         {
-            Flag = false;
+            Flag = false; //Выставление флага для остановки таймера
         }
+
+
 
 
         #endregion    }}

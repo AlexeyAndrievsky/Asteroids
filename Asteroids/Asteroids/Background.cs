@@ -51,7 +51,7 @@ namespace Asteroids
         /// </summary>
         public override void Update()
         {
-            foreach (ImageObject img in BackgroundList) 
+            foreach (ImageObject img in BackgroundList)
                 img.Update(); //Перебор в цикле всех элементов "мозайки" и вызов метода Update для каждого элемента
         }
         #endregion

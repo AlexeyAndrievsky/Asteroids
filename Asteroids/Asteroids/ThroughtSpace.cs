@@ -27,7 +27,8 @@ namespace Asteroids
         /// <param name="rand">Генератор псевдослучайных чисел</param>
         /// <param name="graphic">Поверхность рисования</param>
         /// <param name="screenSize">Размеры области рисования</param>
-        public ThroughtSpace(Point pos, Point dir, Size size, Image image, Random rand, Graphics graphic, Size screenSize) : base(pos, dir, size, image, graphic, screenSize)
+        /// <param name="pulse">Значение, определяющее пульсацию элементов</param>
+        public ThroughtSpace(Point pos, Point dir, Size size, Image image, Random rand, Graphics graphic, Size screenSize, int? pulse) : base(pos, dir, size, image, graphic, screenSize, pulse)
         {
             this.rand = rand;
         }
@@ -74,7 +75,7 @@ namespace Asteroids
 
             //проверка: при выходе элемента за пределы экрана, а так же при достижении определенного размера элемента,
             //размер элемента сбрасывается на минимум, а координаты выставляются случайным образом в пределах экрана
-            if (Size.Width > 10 || Pos.X > ScreenSize.Width || Pos.X < 0 || Pos.Y > ScreenSize.Height || Pos.Y < 0) 
+            if (Size.Width > 10 || Pos.X > ScreenSize.Width || Pos.X < 0 || Pos.Y > ScreenSize.Height || Pos.Y < 0)
             {
                 Size.Width = 1;
                 Pos.X = rand.Next(0, ScreenSize.Width);

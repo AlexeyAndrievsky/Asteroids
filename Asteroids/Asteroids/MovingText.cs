@@ -43,7 +43,7 @@ namespace Asteroids
         /// <param name="brush">Кисточка</param>
         /// <param name="font">Фонт текста</param>
         /// <param name="text">Выводимый текст</param>
-        public MovingText(Point pos, Point dir, Size size, Graphics graphic, Size screenSize, float angle, Brush brush, Font font, string text):base(pos, dir, size, graphic, screenSize)
+        public MovingText(Point pos, Point dir, Size size, Graphics graphic, Size screenSize, float angle, Brush brush, Font font, string text) : base(pos, dir, size, graphic, screenSize)
         {
             //TODO: Слишком много параметров,неудобно. Думаю, стоит переписать
             Brsh = brush;
