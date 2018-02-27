@@ -65,9 +65,12 @@
     <Compile Include="BaseObject.cs" />
     <Compile Include="ExceptionHelper.cs" />
     <Compile Include="Game.cs" />
+    <Compile Include="GameObjectException.cs" />
+    <Compile Include="ICollision.cs" />
     <Compile Include="ImageObject.cs" />
     <Compile Include="Meteor.cs" />
     <Compile Include="MovingText.cs" />
+    <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -94,6 +97,10 @@
     <Content Include="res\img\ast3.png" />
     <Content Include="res\img\background.jpeg" />
     <Content Include="res\img\bluestar.png" />
+    <Content Include="res\img\lasergreen.png" />
+    <Content Include="res\img\laserred.png" />
+    <Content Include="res\img\ship1.png" />
+    <Content Include="res\img\ship2.png" />
     <Content Include="res\img\whitestar.png" />
     <Content Include="res\res.xml" />
   </ItemGroup>

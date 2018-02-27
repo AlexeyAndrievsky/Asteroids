@@ -1,5 +1,6 @@
 ﻿using System;
-using System.Windows.Forms;
+using System.Windows.Forms;
+
 namespace Asteroids
 {
     class Program
@@ -25,4 +26,4 @@ namespace Asteroids
             }
         }
     }
-}
+}

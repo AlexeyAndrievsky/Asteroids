@@ -31,6 +31,7 @@ namespace Asteroids
         /// <param name="image">Изображение, использующееся для отрисовки объекта</param>
         /// <param name="graphic">Поверхность рисования</param>
         /// <param name="screenSize">Размеры области рисования</param>
+        /// <param name="isCollisionEnabled">Нужна ли обработка коллизии объекту</param>
         /// <param name="dAngle">Угол, на который астероид поворачивается за один цикл Update</param>
         public Meteor(Point pos, Point dir, Size size, Image image, Graphics graphic, Size screenSize, float dAngle) : base(pos, dir, size, image, graphic, screenSize)
         {

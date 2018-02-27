@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Forms;
 
 namespace Asteroids
 {
@@ -17,6 +18,7 @@ namespace Asteroids
         {
             Console.WriteLine("Error occurred in " + AddInfo + ": " + ex.Message + " " + ex.TargetSite);
             Console.ReadLine(); //Запрос нажатия клавиши чтобы сообщения не пролистывались
+            Environment.Exit(0);
         }
         #endregion
     }

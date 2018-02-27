@@ -155,6 +155,10 @@ namespace Asteroids
                 Graphics g;
                 _context = BufferedGraphicsManager.Current;
                 g = form.CreateGraphics();
+                if (form.Width <= 0 || form.Height <= 0 || form.Width > 1920 || form.Height > 1080)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
                 Width = form.Width;
                 Height = form.Height;
                 Buffer = _context.Allocate(g, new Rectangle(0, 0, Width, Height));
@@ -203,6 +207,10 @@ namespace Asteroids
                 Timer timer = new Timer { Interval = 100 };
                 timer.Start();
                 timer.Tick += Timer_Tick;
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                exp.PutMessage("SplashScreen.Init(): " + form.Width + "x" + form.Height + " Заданы некорректные значения размера экрана", ex);
             }
             catch (Exception ex)
             {
@@ -316,4 +324,6 @@ namespace Asteroids
 
         #endregion
 
-        #endregion    }}
+        #endregion
+    }
+}

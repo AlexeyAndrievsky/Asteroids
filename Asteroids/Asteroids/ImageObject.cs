@@ -12,7 +12,7 @@ namespace Asteroids
         /// <summary>
         /// Поле, хранящее изображение.
         /// </summary>
-        protected Image Image;
+        public Image Image { get; }
         #endregion
 
         #region .ctor
