@@ -5,7 +5,7 @@ namespace Interfaces.Asteroids
     /// <summary>
     /// Интерфейс обработки коллизий
     /// </summary>
-    interface ICollision
+    public interface ICollision
     {
         #region fields
         /// <summary>

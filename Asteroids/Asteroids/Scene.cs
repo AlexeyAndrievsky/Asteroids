@@ -9,7 +9,7 @@ namespace Asteroids
     /// <summary>
     /// Базовый класс, описывающий "сцену" игры 
     /// </summary>
-    class Scene
+    public class Scene
     {
         #region Fields
         /// <summary>
@@ -25,7 +25,7 @@ namespace Asteroids
         /// <summary>
         /// Поле, хранящее объект класса <see cref="ExceptionHelper"/> для вывода исключений в консоль.
         /// </summary>
-        protected ExceptionHelper exp;
+        public ExceptionHelper exp;
 
         /// <summary>
         /// Поле, хранящее объект - форму.
@@ -171,6 +171,7 @@ namespace Asteroids
                 exp.PutMessage("Scene.Timer_Tick()", ex);
             }
         }
-        #endregion
+        #endregion
+
     }
 }

@@ -9,6 +9,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DelegatExample", "DelegatExample\DelegatExample.csproj", "{CA08B9EA-D549-44F0-A821-8D838CB624E6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maze", "Maze\Maze.csproj", "{74B6AF52-3AA6-4D09-AEA4-C4F95BE7B66D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +25,10 @@ Global
 		{CA08B9EA-D549-44F0-A821-8D838CB624E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA08B9EA-D549-44F0-A821-8D838CB624E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA08B9EA-D549-44F0-A821-8D838CB624E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74B6AF52-3AA6-4D09-AEA4-C4F95BE7B66D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74B6AF52-3AA6-4D09-AEA4-C4F95BE7B66D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74B6AF52-3AA6-4D09-AEA4-C4F95BE7B66D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74B6AF52-3AA6-4D09-AEA4-C4F95BE7B66D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

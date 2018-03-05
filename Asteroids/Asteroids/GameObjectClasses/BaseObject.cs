@@ -6,7 +6,7 @@ namespace Asteroids.GameObjectClasses
     /// <summary>
     /// Абстрактный класс, описывающий базовый игровой объект и реализующий его отрисовку и перемещение.
     /// </summary>
-    abstract class BaseObject:ICollision
+    public abstract class BaseObject:ICollision
     {
         #region Fields
         /// <summary>

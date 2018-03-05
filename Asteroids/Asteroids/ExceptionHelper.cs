@@ -6,7 +6,7 @@ namespace Asteroids
     /// <summary>
     /// Класс вывода сообщения об исключениях в консоль.
     /// </summary>
-    class ExceptionHelper
+    public class ExceptionHelper
     {
         #region Public methods
         /// <summary>
