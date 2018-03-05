@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Asteroids
 {
     /// <summary>
-    /// Класс исключение для GameObject
+    /// Класс исключение для GameObject.
     /// </summary>
     class GameObjectException : Exception
     {

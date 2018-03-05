@@ -2,63 +2,22 @@
 using System.Windows.Forms;
 using System.Drawing;
 using System.Collections.Generic;
+using Asteroids.GameObjectClasses;
 
 namespace Asteroids
 {
     /// <summary>
     /// Класс, реализующий меню игры.
+    /// Дочерний класс класса <see cref="Scene"/>
     /// </summary>
-    static class SplashScreen
+    class SplashScreen : Scene
     {
-        #region Fields
-        /// <summary>
-        /// Контекст для создания графических буферов.
-        /// </summary>
-        private static BufferedGraphicsContext _context;
-
-        /// <summary>
-        /// Поле, хранящее объект - генератор псевдослучайных чисел.
-        /// </summary>
-        private static Random rand;
-
-        /// <summary>
-        /// Поле, хранящее объект класса <see cref="ExceptionHelper"/> для вывода исключений в консоль.
-        /// </summary>
-        private static ExceptionHelper exp;
-
-        /// <summary>
-        /// Поле, хранящее объект - форму.
-        /// </summary>
-        private static Form _form;
-
-        /// <summary>
-        /// Графическии буфер для двойной буферизации.
-        /// </summary>
-        private static BufferedGraphics Buffer;
-
-        /// <summary>
-        /// Список объектов <see cref="BaseObject"/> для хранения и перебора игровых объектов, отображаемых на экране.
-        /// </summary>
-        private static List<BaseObject> _objs;
-
-        /// <summary>
-        /// Ширина игровой области.
-        /// </summary>
-        public static int Width { get; set; }
-
-        /// <summary>
-        /// Высота игровой области.
-        /// </summary>
-        public static int Height { get; set; }
-        #endregion
-
         #region .ctor
         /// <summary>
         /// Конструктор класса SplashScreen.
         /// </summary>
-        static SplashScreen()
+        public SplashScreen() : base()
         {
-            exp = new ExceptionHelper();
         }
         #endregion
 
@@ -66,18 +25,17 @@ namespace Asteroids
         /// <summary>
         /// Метод загрузки главного меню.
         /// </summary>
-        public static void Load()
+        public override void Load()
         {
             try
             {
-                rand = new Random(); //Инициализациея генератора псевдослучайных чисел
-                _objs = new List<BaseObject>(); //Инициализациея списка игровых объектов
+                base.Load();
 
                 Image img = Image.FromFile(@"..\..\res\img\bluestar.png"); //Загрузка изображения, используемого в эффекте "сквозь космос"
                 Image ttl = Image.FromFile(@"..\..\res\img\title.png"); //Загрузка изображения заголовка игры
 
                 #region Text adding
-                _objs.Add(new MovingText( //Добавление плавающего текста в список отображаемых объектов
+                objs.Add(new MovingText( //Добавление плавающего текста в список отображаемых объектов
                     new Point(0, Height - 100), //Начальные координаты текста
                     new Point(10, 0), //Направление и скорость движение текста 
                     new Size(0, 0),
@@ -89,7 +47,7 @@ namespace Asteroids
                     "© Alexey.B.Andrievsky ~ 2018" //Отображаемый текст
                     ));
 
-                _objs.Add(new MovingText( //Добавление перевернутово плавающего текста в список отображаемых объектов
+                objs.Add(new MovingText( //Добавление перевернутово плавающего текста в список отображаемых объектов
                     new Point(Width, Height - 60), //Начальные координаты текста
                     new Point(-10, 0), //Направление и скорость движение текста 
                     new Size(0, 0),
@@ -101,7 +59,7 @@ namespace Asteroids
                     "© Alexey.B.Andrievsky ~ 2018" //Отображаемый текст
                     ));
 
-                _objs.Add(new MovingText( //Добавление текста предупреждения в список отображаемых объектов
+                objs.Add(new MovingText( //Добавление текста предупреждения в список отображаемых объектов
                     new Point(10, 10), //Начальные координаты текста
                     new Point(0, 0), //Направление и скорость движение текста 
                     new Size(0, 0),
@@ -114,7 +72,7 @@ namespace Asteroids
                     ));
                 #endregion
 
-                _objs.Add(new ImageObject( //Добавление заголовка в список отображаемых объектов
+                objs.Add(new ImageObject( //Добавление заголовка в список отображаемых объектов
                     new Point(Width / 2 - 350, 300), //Координаты заголовка
                     new Point(0, 0), //Направление и скорость движения
                     new Size(700, 100), //Размер заголовка
@@ -124,7 +82,7 @@ namespace Asteroids
                     ));
 
                 for (int i = 0; i < 150; i++)
-                    _objs.Add(new ThroughtSpace( //Добавление элементов, образующих эффект "сквозь космос" в список отображаемых объектов
+                    objs.Add(new ThroughtSpace( //Добавление элементов, образующих эффект "сквозь космос" в список отображаемых объектов
                         new Point(rand.Next(0, Width), rand.Next(0, Height)), //Начальные координаты каждого элемента задаются случайным образом
                         new Point(5, 5), //Скорость движения элементов
                         new Size(1, 1), //Начальный размер элементов
@@ -145,23 +103,11 @@ namespace Asteroids
         /// Метод инициализации главного меню.
         /// </summary>
         /// <param name="form">Форма, внутри которой реализована графика</param>
-        public static void Init(Form form)
+        public override void Init(Form form)
         {
             try
             {
-                _form = form;
-
-                //Инициализация графики
-                Graphics g;
-                _context = BufferedGraphicsManager.Current;
-                g = form.CreateGraphics();
-                if (form.Width <= 0 || form.Height <= 0 || form.Width > 1920 || form.Height > 1080)
-                {
-                    throw new ArgumentOutOfRangeException();
-                }
-                Width = form.Width;
-                Height = form.Height;
-                Buffer = _context.Allocate(g, new Rectangle(0, 0, Width, Height));
+                base.Init(form);
 
                 #region Buttons add
                 //Добавление кнопки начала игры
@@ -200,83 +146,20 @@ namespace Asteroids
                 quit.BackColor = Color.FromArgb(120, 0, 0, 0);
                 _form.Controls.Add(quit);
                 #endregion
-
-                Load(); //Вызов метода загрузки игры
-
-                //Инициализация и запуск игрового таймера
-                Timer timer = new Timer { Interval = 100 };
-                timer.Start();
-                timer.Tick += Timer_Tick;
-            }
-            catch (ArgumentOutOfRangeException ex)
-            {
-                exp.PutMessage("SplashScreen.Init(): " + form.Width + "x" + form.Height + " Заданы некорректные значения размера экрана", ex);
             }
             catch (Exception ex)
             {
                 exp.PutMessage("SplashScreen.Init()", ex);
             }
         }
-
-        /// <summary>
-        /// Метод отрисовки экрана меню.
-        /// </summary>
-        public static void Draw()
-        {
-            try
-            {
-                Buffer.Graphics.Clear(Color.Black); //Очистка области
-
-                foreach (BaseObject obj in _objs)
-                    obj.Draw(); //Перебор всех игровых объектов в цикле и вызов их метода отрисовки
-
-                Buffer.Render();
-            }
-            catch (Exception ex)
-            {
-                exp.PutMessage("SplashScreen.Draw()", ex);
-            }
-        }
-
-        /// <summary>
-        /// Метод обновления параметров объектов главного меню.
-        /// </summary>
-        public static void Update()
-        {
-            try
-            {
-                foreach (BaseObject obj in _objs)
-                    obj.Update(); //Перебор всех объектов главного меню в цикле и вызов их метода обновления
-            }
-            catch (Exception ex)
-            {
-                exp.PutMessage("SplashScreen.Update()", ex);
-            }
-
-        }
         #endregion
 
         #region Private methods
-        /// <summary>
-        /// Оброботчик события срабатывания игрового таймера.
-        /// </summary>
-        private static void Timer_Tick(object sender, EventArgs e)
-        {
-            try
-            {
-                Draw(); //Вызов метода отрисовки игрового экрана
-                Update(); //Вызов метода обновления параметров игровых объектов
-            }
-            catch (Exception ex)
-            {
-                exp.PutMessage("SplashScreen.Timer_Tick()", ex);
-            }
-        }
 
         /// <summary>
         /// Обработчик события, возникающего при закрытии формы, в которой реализована игра.
         /// </summary>
-        private static void game_Closed(object sender, FormClosedEventArgs e)
+        private void game_Closed(object sender, FormClosedEventArgs e)
         {
             _form.Visible = true; //При закрытии формы с игрой, форма главного меню становится видимой
         }
@@ -285,7 +168,7 @@ namespace Asteroids
         /// <summary>
         /// Обработчик события нажатия кнопки выхода из игры.
         /// </summary>
-        private static void quit_Click(object sender, EventArgs e)
+        private void quit_Click(object sender, EventArgs e)
         {
             _form.Close(); //Закрытие текущей формы
         }
@@ -293,7 +176,7 @@ namespace Asteroids
         /// <summary>
         /// Обработчик события нажатия кнопки начала игры.
         /// </summary>
-        private static void startGame_Click(object sender, EventArgs e)
+        private void startGame_Click(object sender, EventArgs e)
         {
             _form.Visible = false; //Форма главного меню скрывается
 
@@ -303,7 +186,8 @@ namespace Asteroids
             gameForm.FormBorderStyle = FormBorderStyle.None;
             gameForm.Width = Screen.PrimaryScreen.Bounds.Width;
             gameForm.Height = Screen.PrimaryScreen.Bounds.Height;
-            Game.Init(gameForm);
+            Game game = new Game();
+            game.Init(gameForm);
             gameForm.Show();
             gameForm.FormClosed += new FormClosedEventHandler(game_Closed); //Добавление события, возникающего при закрытии формы с игрой
         }
@@ -318,10 +202,6 @@ namespace Asteroids
             throw new NotImplementedException();
 #endif
         }
-
-
-
-
         #endregion
 
         #endregion

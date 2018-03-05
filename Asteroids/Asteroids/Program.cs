@@ -16,7 +16,8 @@ namespace Asteroids
                 form.FormBorderStyle = FormBorderStyle.None;
                 form.Width = Screen.PrimaryScreen.Bounds.Width;
                 form.Height = Screen.PrimaryScreen.Bounds.Height;
-                SplashScreen.Init(form);
+                SplashScreen splashScreen = new SplashScreen();
+                splashScreen.Init(form);
                 form.Show();
                 Application.Run(form);
             }

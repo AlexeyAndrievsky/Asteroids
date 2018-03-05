@@ -3,7 +3,7 @@ using System.Drawing;
 using System.IO;
 using System.Xml.Serialization;
 
-namespace Asteroids
+namespace Asteroids.ResourcesLoaderClasses
 {
     /// <summary>
     /// Класс для загрузки ресурсов из xml файла.

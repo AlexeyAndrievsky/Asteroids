@@ -1,13 +1,14 @@
-﻿using System;
+﻿using Asteroids.Interfaces;
+using System;
 using System.Drawing;
 
-namespace Asteroids
+namespace Asteroids.GameObjectClasses
 {
     /// <summary>
     /// Класс, описывающий астероид и реализующий его отрисовку и перемещение.
     /// Дочерний класс класса <see cref="ImageObject"/>
     /// </summary>
-    class Meteor : ImageObject
+    class Meteor : ImageObject, IDestroyable, IQuantitative
     {
         #region Fields
         /// <summary>
@@ -19,6 +20,26 @@ namespace Asteroids
         /// Поле, хранящее значение угла отрисовки астероида.
         /// </summary>
         protected float DAngle;
+
+        /// <summary>
+        /// Поле, хранящее количество жизней астероида.
+        /// </summary>
+        public int Health { get; protected set; } = 30;
+
+        /// <summary>
+        /// Поле, хранящее максимальное количество жизней астероида.
+        /// </summary>
+        public int MaxHealth { get; protected set; } = 30;
+
+        /// <summary>
+        /// Количество очков, которые получает игрок за уничтожение астероида.
+        /// </summary>
+        public int Points { get; protected set; } = 50;
+
+        /// <summary>
+        /// Событие, возникающее при взаимодействии астероида с другими объектами. 
+        /// </summary>
+        public event MessageEventHandler EnemyMessage;
         #endregion
 
         #region .ctor
@@ -66,13 +87,13 @@ namespace Asteroids
             Graphic.DrawImage(Image, destPoints);
 
             // TODO: разобраться почему способ, приведенный ниже дает глюк
-            /*
-            Game.Buffer.Graphics.TranslateTransform(Pos.X+Size.Width/2, Pos.Y+Size.Height/2);
-            Game.Buffer.Graphics.RotateTransform(Angle);
-            Game.Buffer.Graphics.DrawImage(ObjectImage, new Rectangle(0, 0, Size.Width, Size.Height));
-            Game.Buffer.Graphics.RotateTransform(-Angle);
-            Game.Buffer.Graphics.TranslateTransform(-(Pos.X + Size.Width / 2), -(Pos.Y + Size.Height / 2));
-            */
+            //
+            //Game.Buffer.Graphics.TranslateTransform(Pos.X+Size.Width/2, Pos.Y+Size.Height/2);
+            //Game.Buffer.Graphics.RotateTransform(Angle);
+            //Game.Buffer.Graphics.DrawImage(ObjectImage, new Rectangle(0, 0, Size.Width, Size.Height));
+            //Game.Buffer.Graphics.RotateTransform(-Angle);
+            //Game.Buffer.Graphics.TranslateTransform(-(Pos.X + Size.Width / 2), -(Pos.Y + Size.Height / 2));
+            //
         }
 
         /// <summary>
@@ -83,20 +104,45 @@ namespace Asteroids
             Pos.X = Pos.X + Dir.X;
             Pos.Y = Pos.Y + Dir.Y;
 
-            //Если объект доходит до края экрана, то он начинает движение с противоположной стороны экрана 
-            if (Pos.X < -Size.Width)
-                Pos.X = ScreenSize.Width + Size.Width;
-            if (Pos.X > ScreenSize.Width + Size.Width)
-                Pos.X = -Size.Width;
-            if (Pos.Y < -Size.Height)
-                Pos.Y = ScreenSize.Height + Size.Height;
-            if (Pos.Y > ScreenSize.Height + Size.Height)
-                Pos.Y = -Size.Height;
+            if (Pos.X < -Size.Width || Pos.Y < -Size.Height || Pos.Y > ScreenSize.Height + Size.Height)
+                //Если объект доходит до края экрана, то генерируется событие 
+                EnemyMessage?.Invoke(this, new MessageEventArgs("Астероид не был уничтожен, и теперь направляется в сторону планеты.", -2, MessageEventArgs.EventTypeEnum.OutOfScreen));
 
             //Поворот объекта на заданный угол
             Angle += DAngle;
             if (Angle >= 360) //Если угол больше или равен 360 градусов, то он выставляется в 0
                 Angle = 0;
+        }
+
+        /// <summary>
+        /// Метод, описывающий получение урона.
+        /// </summary>
+        /// <param name="damage">Количество жизней, которые следует отнять у объекта</param>
+        public void GetDamage(int damage)
+        {
+            System.Media.SystemSounds.Asterisk.Play();
+            Health -= damage;
+            EnemyMessage?.Invoke(this, new MessageEventArgs("Астероид поврежден.", damage, MessageEventArgs.EventTypeEnum.GotDamage));
+            if (Health <= 0)
+                Die();
+        }
+
+        /// <summary>
+        /// Метод, описывающий лечение объекта.
+        /// </summary>
+        /// <param name="health">количество здоровья, на которое следует увеличить жизни объекта.</param>
+        public void GetHealed(int health)
+        {
+            //TODO: Так как астероид не лечится, есть смысл вынести лечение в отдельный интерфейс
+        }
+
+        /// <summary>
+        /// Метод, описывающий смерть объекта.
+        /// </summary>
+        public void Die()
+        {
+            System.Media.SystemSounds.Exclamation.Play();
+            EnemyMessage?.Invoke(this, new MessageEventArgs("Астероид уничтожен!", Points, MessageEventArgs.EventTypeEnum.Killed));
         }
         #endregion    }
 }

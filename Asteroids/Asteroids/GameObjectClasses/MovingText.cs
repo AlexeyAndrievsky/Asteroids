@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace Asteroids
+namespace Asteroids.GameObjectClasses
 {
     /// <summary>
     /// Класс для отрисовки текста под произвольным углом и перемещения текста по экрану.

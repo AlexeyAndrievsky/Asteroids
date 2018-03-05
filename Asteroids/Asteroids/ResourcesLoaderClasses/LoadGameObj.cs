@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-namespace Asteroids
+namespace Asteroids.ResourcesLoaderClasses
 {
     /// <summary>
     /// Сериализуемый класс LoadGameObj для хранения загружаемых ресурсов.
